@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HOD Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f0f4f8, #d9eaf7);
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #e74c3c;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+
+    form {
+      display: flex;
+      margin-bottom: 20px;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4a90e2;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #357abd;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #4a90e2;
+      color: white;
+    }
+
+    td form {
+      margin: 0;
+    }
+
+    .section-title {
+      margin-top: 40px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/logout" class="logout-btn">Logout</a>
+
+    <h2>HOD Dashboard</h2>
+
+    <h3>Add Allowed Staff Email</h3>
+    <form method="POST" action="/add_email">
+      <input type="text" name="email" placeholder="Enter staff email" required>
+      <button type="submit">Add Email</button>
+    </form>
+
+    <h3 class="section-title">Allowed Emails</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for email in emails %}
+        <tr>
+          <td>{{ email }}</td>
+          <td>
+            <form method="POST" action="/remove_email">
+              <input type="hidden" name="email" value="{{ email }}">
+              <button type="submit" style="background-color:#e74c3c;">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h3 class="section-title">Registered Staff</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Class</th>
+          <th>Section</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for staff in staff_users %}
+        <tr>
+          <td>{{ staff.email }}</td>
+          <td>{{ staff.class_name }}</td>
+          <td>{{ staff.section }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

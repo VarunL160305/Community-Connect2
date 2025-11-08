@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generated Timetable</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f9ff, #e6f2ff);
+      color: #2c3e50;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: center;
+      word-wrap: break-word;
+      height: 80px;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+
+    th:first-child,
+    td:first-child {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+
+    td {
+      vertical-align: middle;
+      background-color: #fdfdfd;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-logout {
+      background-color: #ff4d4d;
+    }
+
+    .btn-logout:hover {
+      background-color: #e60000;
+    }
+
+
+    @media (max-width: 768px) {
+      td, th {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Final Timetable</h2>
+
+    <table>
+      <tr>
+        <th>Day / Hour</th>
+        {% for h in range(1, 9) %}
+          <th>{{ h }}</th>
+        {% endfor %}
+      </tr>
+      {% set ordered_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %}
+      {% for day in ordered_days %}
+        {% if day in timetable %}
+          <tr>
+            <td>{{ day }}</td>
+            {% for entry in timetable[day] %}
+              <td>{{ entry }}</td>
+            {% endfor %}
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </table>
+
+    <div class="button-group">
+      <a href="/subject_input" class="btn btn-modify" style="background-color: black;">Modify Timetable</a>
+      <a href="/logout" class="btn btn-logout">Logout</a>
+    </div>
+
+  </div>
+</body>
+</html>
