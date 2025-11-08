@@ -18,6 +18,16 @@ def get_db():
         g.db.row_factory = sqlite3.Row
     return g.db
 
+@app.before_request
+def ensure_db_initialized():
+    db = get_db()
+    try:
+        # Try selecting from a known table to test if the DB exists
+        db.execute("SELECT 1 FROM users LIMIT 1")
+    except sqlite3.OperationalError:
+        print("Database not found — initializing now...")
+        init_db()
+
 @app.teardown_appcontext
 def close_db(exception=None):
     db = g.pop('db', None)
