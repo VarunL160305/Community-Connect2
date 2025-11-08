@@ -251,6 +251,8 @@ def logout():
     return redirect('/')
 
 if __name__ == "__main__":
-    if not os.path.exists(DATABASE):
-        init_db()
+    try:
+        init_db()  # Always ensures tables exist
+    except Exception as e:
+        print("Error initializing database:", e)
     app.run(debug=True)
