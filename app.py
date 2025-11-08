@@ -3,6 +3,9 @@ import sqlite3
 import os
 from werkzeug.security import generate_password_hash, check_password_hash  # Added for password hashing
 
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATABASE = os.path.join(BASE_DIR, "data.db")
+
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
